@@ -9,11 +9,22 @@
 REMOTE_HOME=$1
 INSTALL_JAVA=$2
 JMETER_VERSION=$3
+PLUGINS=( "http://jmeter-plugins.org/downloads/file/JMeterPlugins-Standard-1.1.1.zip" "http://jmeter-plugins.org/downloads/file/JMeterPlugins-ExtrasLibs-1.1.1.zip" )
 
 
 function install_jmeter_plugins() {
-    wget -q -O $REMOTE_HOME/JMeterPlugins.jar https://s3.amazonaws.com/jmeter-ec2/JMeterPlugins.jar
-    mv $REMOTE_HOME/JMeterPlugins.jar $REMOTE_HOME/$JMETER_VERSION/lib/ext/
+
+    sudo apt-get install unzip
+    
+    for plugin in ${PLUGINS[@]}; do
+        echo "downloading and installing plugin from $plugin"
+        mkdir -p "$REMOTE_HOME/plugindl"
+        wget -q -O $REMOTE_HOME/plugindl/plugin.zip $plugin
+        unzip -o $REMOTE_HOME/plugindl/plugin.zip -d $REMOTE_HOME/plugindl/extract
+        cp -f -r $REMOTE_HOME/plugindl/extract/lib/* $REMOTE_HOME/$JMETER_VERSION/lib/
+        rm -rf  $REMOTE_HOME/plugindl/
+    done
+
 }
 
 function install_mysql_driver() {
