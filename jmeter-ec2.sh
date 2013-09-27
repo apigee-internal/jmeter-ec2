@@ -153,10 +153,9 @@ function runsetup() {
 		            --key $AMAZON_KEYPAIR_NAME \
                     -t $INSTANCE_TYPE \
                     -g $INSTANCE_SECURITYGROUP \
-                    -n 1-$instance_count \
+                    -n $instance_count \
 		            --region $REGION \
-                    --availability-zone \
-                    $INSTANCE_AVAILABILITYZONE $AMI_ID \
+                    $AMI_ID \
                     | awk '/^INSTANCE/ {print $2}'`)
         
         # check to see if Amazon returned the desired number of instances as a limit is placed restricting this and we need to handle the case where
