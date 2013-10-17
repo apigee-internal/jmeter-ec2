@@ -3,8 +3,6 @@
 # jmeter-ec2 - Install Script (Runs on remote ec2 server)
 #
 
-# Source the jmeter-ec2.properties file, establishing these constants.
-. /tmp/jmeter-ec2.properties
 
 REMOTE_HOME=$1
 INSTALL_JAVA=$2
